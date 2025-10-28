@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Редактировать заметку</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="header">
+    <img src="{{ url_for('static', filename='psb_logo.png') }}" alt="Логотип ПСБ" class="logo">
+    <h1>Блокнот сотрудника</h1>
+  </header>
+
+  <h1>Редактирование заметки</h1>
+  <form method="post" action="{{ url_for('edit_note', note_id=note.id) }}">
+    {{ form.hidden_tag() }}
+
+    <label>{{ form.title.label }}</label>
+    {{ form.title(class="form-control") }}
+    {% for error in form.title.errors %}
+      <div class="error-message">{{ error }}</div>
+    {% endfor %}
+
+    <label>{{ form.content.label }}</label>
+    {{ form.content(class="form-control", rows=10) }}
+    {% for error in form.content.errors %}
+      <div class="error-message">{{ error }}</div>
+    {% endfor %}
+
+    <div class="form-buttons">
+      {{ form.submit(class="button") }}
+      <a href="{{ url_for('index') }}" class="button cancel-button">Отмена</a>
+    </div>
+  </form>
+</body>
+</html>

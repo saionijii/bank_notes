@@ -1,0 +1,241 @@
+/* Общие стили */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f3f6;
+  color: #333;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #003366; /* Темно-синий ПСБ */
+}
+
+/* Поля форм */
+.form-control {
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+/* Формы */
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  margin-bottom: 30px;
+}
+
+/* Унификация всех кнопок и ссылок */
+.button, .note-actions button, .note-actions a, form input[type="submit"], form button, .form-buttons a {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.4;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  min-width: 90px;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+/* Основной синий стиль */
+.button {
+  background-color: #003366;
+}
+
+.button:hover {
+  background-color: #ff6600;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Кнопка Отмена */
+.cancel-button {
+  background-color: #888;
+}
+
+.cancel-button:hover {
+  background-color: #ff6600;
+  color: #fff; /* текст остаётся белым при hover */
+}
+
+/* Список заметок */
+.note {
+  background-color: #ffffff;
+  border-left: 5px solid #003366;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.note strong {
+  font-size: 18px;
+}
+
+.meta {
+  color: #666;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
+.note-actions {
+  margin-top: 12px;
+}
+
+/* Убираем белый блок у формы кнопки удалить */
+.inline-form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.inline-form button.button {
+  margin: 0 0 0 8px; /* расстояние между кнопками */
+}
+
+/* Flash-сообщения */
+.flash-message {
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  color: #fff;
+}
+.flash-message.success { background-color: #28a745; }
+.flash-message.error { background-color: #dc3545; }
+
+/* Ссылки */
+a {
+  text-decoration: none;
+  color: #003366;
+}
+
+a:hover { text-decoration: underline; color: #ff6600; }
+
+/* Форма редактирования — выравнивание кнопок */
+.form-buttons {
+  margin-top: 12px;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  .note {
+    padding: 12px 15px;
+  }
+  .button {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .form-buttons a {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.note-content {
+  margin-top: 8px;
+}
+
+/* --- Auth pages layout --- */
+.auth-container {
+  max-width: 520px;
+  margin: 20px auto;
+  padding: 0 12px;
+}
+
+.auth-card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.form-title {
+  margin: 0 0 16px;
+  font-size: 22px;
+  color: #003366;
+  text-align: left;
+}
+
+/* маленькая ссылка рядом с кнопкой (регистрация/вход) */
+.small-link {
+  display: inline-block;
+  min-width: 120px;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+/* чуть мягче визуал для cancel-button на auth-страницах */
+.cancel-button {
+  background-color: #888;
+  color: #fff;
+}
+.cancel-button:hover {
+  background-color: #ff6600;
+  color: #fff;
+}
+
+/* Выравнивание кнопок в форме (на больших экранах inline, на мобильных - столбцом) */
+.form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: flex-start;
+}
+@media (max-width: 520px) {
+  .form-buttons { flex-direction: column; }
+  .small-link { width: 100%; }
+}
+
+/* Ошибки ввода — чуть больше отступ и контраст */
+.error-message {
+  color: #b30000;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+/* header — чуть упрощён для согласованности */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.header .logo { height: 52px; }

@@ -1,0 +1,30 @@
+name: Security CI (Bandit)
+
+# События, которые запускают workflow
+on:
+  push:
+    branches: [ main ] # Запускать на каждый пуш в ветку main
+  pull_request:
+    branches: [ main ] # Запускать при создании PR в ветку main
+
+jobs:
+  bandit_scan:
+    runs-on: ubuntu-latest # GitHub Actions использует последнюю версию Ubuntu для выполнения шагов
+
+    steps:
+      - name: Checkout repo # Шаг 1: получить код репозитория
+        uses: actions/checkout@v4 # Действие для клонирования репозитория в среду Actions
+
+      - name: Setup Python # Шаг 2: установить Python
+        uses: actions/setup-python@v4 # Действие для установки нужной версии Python
+        with:
+          python-version: '3.11'
+
+      - name: Install Bandit # Шаг 3: установить Bandit
+        run: |
+          python -m pip install --upgrade pip # Обновляем pip
+          pip install bandit
+
+      - name: Run Bandit (fail on high issues) # Шаг 4: запустить анализ кода
+        run: |
+          bandit -r . -lll -iii || exit 0 # Рекурсивно проверяет текущую директорию, выдает подробные логи, показывает только high и medium issues

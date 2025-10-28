@@ -1,0 +1,6 @@
+Flask
+Flask-WTF
+python-dotenv
+Flask-SQLAlchemy
+gunicorn
+bleach

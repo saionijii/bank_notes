@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Блокнот сотрудника ПСБ — список</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="header">
+    <img src="{{ url_for('static', filename='psb_logo.png') }}" alt="Логотип ПСБ" class="logo">
+    <h1>Блокнот сотрудника</h1>
+  </header>
+
+  <!-- Flash-сообщения -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <h2>Создать новую заметку</h2>
+  <form method="post" action="{{ url_for('index') }}">
+    {{ form.hidden_tag() }}
+
+    <label>{{ form.title.label }}</label>
+    {{ form.title(class="form-control") }}
+    {% for error in form.title.errors %}
+      <div class="error-message">{{ error }}</div>
+    {% endfor %}
+
+    <label>{{ form.content.label }}</label>
+    {{ form.content(class="form-control", rows=6) }}
+    {% for error in form.content.errors %}
+      <div class="error-message">{{ error }}</div>
+    {% endfor %}
+
+    <div>{{ form.submit(class="button") }}</div>
+  </form>
+
+  <h2>Список заметок</h2>
+  {% for note in notes %}
+    <div class="note">
+      <strong>{{ note.title }}</strong>
+      <div class="meta">Создано: {{ note.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+
+      <div class="note-content">{{ note.content | e | replace('\n', '<br>') | safe }}</div>
+
+      <div class="note-actions">
+        {% if note.id in session.get('note_ids', []) %}
+          <a href="{{ url_for('edit_note', note_id=note.id) }}" class="button">Редактировать</a>
+        {% else %}
+          <span class="disabled">Редактирование недоступно</span>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('delete_note', note_id=note.id) }}" class="inline-form">
+          {{ delete_form.hidden_tag() }}
+          <button type="submit" class="button">Удалить</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <p>Заметок пока нет.</p>
+  {% endfor %}
+</body>
+</html>

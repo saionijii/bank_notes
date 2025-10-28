@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Регистрация — Блокнот сотрудника</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="header">
+    <img src="{{ url_for('static', filename='psb_logo.png') }}" alt="Логотип ПСБ" class="logo">
+    <h1>Блокнот сотрудника</h1>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2 class="form-title">Создать аккаунт</h2>
+
+      <form method="post" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+
+        <label>{{ form.username.label }}</label>
+        {{ form.username(class="form-control") }}
+        {% for error in form.username.errors %}
+          <div class="error-message">{{ error }}</div>
+        {% endfor %}
+
+        <label>{{ form.password.label }}</label>
+        {{ form.password(class="form-control") }}
+        {% for error in form.password.errors %}
+          <div class="error-message">{{ error }}</div>
+        {% endfor %}
+
+        <div class="form-buttons">
+          {{ form.submit(class="button") }}
+          <a href="{{ url_for('login') }}" class="button cancel-button small-link">Войти</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
