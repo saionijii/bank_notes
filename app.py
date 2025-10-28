@@ -168,16 +168,6 @@ def forbidden(e):
 debug = os.environ.get('FLASK_DEBUG', '0') == '1'
 
 if __name__ == '__main__':
-    try:
-        from waitress import serve
-        if debug:
-            print("Запуск Flask (dev)")
-            app.run(debug=True)
-        else:
-            print("Запуск через waitress 0.0.0.0:5000")
-            serve(app, host='0.0.0.0', port=5000)
-    except Exception as e:
-        print("Waitress не доступен, запуск через Flask:", e)
-        app.run(debug=debug)
+    app.run(debug=True) 
 
 
