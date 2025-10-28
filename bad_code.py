@@ -1,4 +1,4 @@
-import os
+import pickle
 
-def very_bad_func():
-    os.system("rm -rf /")  # Уязвимость: выполнение системных команд
+def insecure_load(data):
+    return pickle.loads(data)  # HIGH: небезопасная десериализация
