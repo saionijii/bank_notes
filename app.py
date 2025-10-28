@@ -168,7 +168,8 @@ def forbidden(e):
 debug = os.environ.get('FLASK_DEBUG', '0') == '1'
 
 if __name__ == '__main__':
-from waitress import serve 
-print("Запуск через waitress 0.0.0.0:5000") 
-serve(app, host='0.0.0.0', port=5000)
+    from waitress import serve 
+    print("Запуск через waitress 0.0.0.0:5000") 
+    serve(app, host='0.0.0.0', port=5000)
+
 
