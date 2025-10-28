@@ -20,7 +20,7 @@ jobs:
       - name: Run Bandit and fail on high
         run: |
           bandit -r . -lll -iii -f json -o bandit.json || true # запуск Bandit рекурсивно по всей директории, JSON в bandit.json
-          python - <<'PYCODE'
+          python - <<PYCODE
 import json, sys
 with open("bandit.json") as f:
     data = json.load(f)
