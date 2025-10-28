@@ -1,6 +1,10 @@
 name: Security CI (Bandit)
 
-on: [push, pull_request] # workflow запускается при пуше или открытии/обновлении Pull Request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main] # workflow запускается при пуше или открытии/обновлении Pull Request
 
 jobs:
   bandit:
