@@ -1,30 +1,25 @@
 name: Security CI (Bandit)
 
-# События, которые запускают workflow
-on:
-  push:
-    branches: [ main ] # Запускать на каждый пуш в ветку main
-  pull_request:
-    branches: [ main ] # Запускать при создании PR в ветку main
+on: [push, pull_request]  # workflow запускается при пуше или открытии/обновлении Pull Request
 
 jobs:
-  bandit_scan:
-    runs-on: ubuntu-latest # GitHub Actions использует последнюю версию Ubuntu для выполнения шагов
-
+  bandit:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo # Шаг 1: получить код репозитория
-        uses: actions/checkout@v4 # Действие для клонирования репозитория в среду Actions
+      - uses: actions/checkout@v3 # проверка репозитория
 
-      - name: Setup Python # Шаг 2: установить Python
-        uses: actions/setup-python@v4 # Действие для установки нужной версии Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: 3.11 # установка Python
 
-      - name: Install Bandit # Шаг 3: установить Bandit
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip # Обновляем pip
-          pip install bandit
+          pip install bandit # установка Bandit
 
-      - name: Run Bandit (fail on high issues) # Шаг 4: запустить анализ кода
+      - name: Run Bandit and fail on high
         run: |
-          bandit -r . -lll -iii # Рекурсивно проверяет текущую директорию, выдает подробные логи, показывает только high и medium issues
+          bandit -r . -lll -iii -f json -o bandit.json # запуск Bandit рекурсивно по всей директории, JSON в bandit.json
+          
+          python -c "import json; r=json.load(open('bandit.json')); exit(1) if any(i['issue_severity']=='HIGH' for i in r['results']) else exit(0)"
+          # проверка JSON: если есть хотя бы одна критическая уязвимость - падение
