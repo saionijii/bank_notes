@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Bandit (fail on high issues) # Шаг 4: запустить анализ кода
         run: |
-          bandit -r . -lll -iii || exit 0 # Рекурсивно проверяет текущую директорию, выдает подробные логи, показывает только high и medium issues
+          bandit -r . -lll -iii || true # Рекурсивно проверяет текущую директорию, выдает подробные логи, показывает только high и medium issues
