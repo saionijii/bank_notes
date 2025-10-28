@@ -19,7 +19,7 @@ jobs:
 
       - name: Run Bandit and fail on high
         run: |
-          bandit -r . -lll -iii -f json -o bandit.json # запуск Bandit рекурсивно по всей директории, JSON в bandit.json
+          bandit -r . -lll -iii -f json -o bandit.json || true # запуск Bandit рекурсивно по всей директории, JSON в bandit.json
           
           python -c "import json,sys; d=json.load(open('bandit.json')); sys.exit(1 if any(i.get('issue_severity')=='HIGH' for i in d.get('results',[])) else 0)"
           # проверка JSON: если есть хотя бы одна критическая уязвимость - падение
